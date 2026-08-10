@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-10
 **Owner:** Daksh Singhvi
-**Status:** Approved pending final user review
+**Status:** Approved (user-reviewed 2026-08-10 — section reorder + sarthakjha.dev content inspiration applied)
 
 ## 1. Purpose & Audience
 
@@ -24,16 +24,20 @@ Two audiences, in priority order:
 | Tone | **Polished system aesthetic + discoverable easter eggs** (no stickers/googly eyes) |
 | Wallpaper | **"Night Hills"** — the Creatie hills at night: starry sky, moon, deep green-navy, **mint-green accent** (`#34c759` family). Light mode = sunny "Day Hills" variant. User may revisit later — wallpaper is an isolated CSS/SVG layer, cheap to swap |
 | Stack | **Next.js (App Router, fully static) + Tailwind CSS + Motion (Framer Motion), deployed on Vercel** |
+| Section order | **About → Experience → Projects** (after hero), per user review |
+| Content inspiration | [sarthakjha.dev](https://www.sarthakjha.dev/) — proof-of-impact metrics on project cards, skills as tag pills. **Presentation ideas only; the macOS design language stays exactly as specced** |
 
 ## 3. Page Structure (one page, five sections)
 
 Fixed chrome: **menu bar** (top) and **dock** (bottom) always visible on desktop.
 
 1. **Hero — "the desktop":** Night Hills wallpaper (custom SVG/CSS, no Apple-copyrighted assets). Green-dot pill "Available for work · Liverpool, UK", name, "Software Engineer" + one-line summary (graduate, 1+ yr shipping at scale). Dock is the primary nav.
-2. **Projects — "the windows":** 4 featured as mac windows: **Numble** (live demo + repo), **Padelo** (Play Store, private repo), **Music Deepfake Detector**, **Autonomous Robot Mapper**. Compact row below: react-storefront, SimonGame, "more on GitHub →".
+2. **About — terminal + skills panel:** interactive Terminal window beside a skim-able skills grid (languages / frameworks / cloud & tools from CV, rendered as compact tag pills). Recruiters never need to type to see skills.
 3. **Experience — Finder-style list:** Sentric Music (Associate SWE, Sep 2024–Sep 2025; 10M+ records/run, 150+ internal users), Al Futtaim Blue Rewards (intern; GPT-4o receipt scanning, 2M-user dashboard), education (Liverpool BSc CS, First Class Hons, 99% SE exam, VC Scholarship).
-4. **About — terminal + skills panel:** interactive Terminal window beside a skim-able skills grid (languages / frameworks / cloud & tools from CV). Recruiters never need to type to see skills.
+4. **Projects — "the windows":** 4 featured as mac windows: **Numble** (live demo + repo), **Padelo** (Play Store, private repo), **Music Deepfake Detector**, **Autonomous Robot Mapper**. Compact row below: react-storefront, SimonGame, "more on GitHub →". Each featured window leads with a one-line impact metric where one exists (users, downloads, accuracy) before the tech detail — proof of impact first.
 5. **Contact — mail composer:** email CTA, GitHub, LinkedIn, **Download CV** (PDF in `public/cv/`). Footer: © · "Built with Next.js · Designed like a Mac".
+
+Dock icon order and scrollspy follow this section order.
 
 ## 4. Interaction Layer
 
