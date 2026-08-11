@@ -1,9 +1,10 @@
-import { Wallpaper } from "@/components/desktop/Wallpaper";
-import { MenuBar } from "@/components/chrome/MenuBar";
 import { Dock } from "@/components/chrome/Dock";
-import { Hero } from "@/components/sections/Hero";
+import { MenuBar } from "@/components/chrome/MenuBar";
+import { Wallpaper } from "@/components/desktop/Wallpaper";
 import { About } from "@/components/sections/About";
+import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
+import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
         <About />
         <Experience />
         <Projects />
+        <Contact />
       </main>
       <Dock />
     </>
