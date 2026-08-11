@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { SECTIONS, SECTION_IDS } from "@/lib/sections";
 import { useActiveSection } from "@/lib/use-active-section";
@@ -11,20 +11,33 @@ export function MenuBar() {
   const active = useActiveSection(SECTION_IDS);
   const { theme, toggle } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);
     };
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (toggleRef.current?.contains(target)) return;
+      if (popoverRef.current?.contains(target)) return;
+      setMenuOpen(false);
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
   }, [menuOpen]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex h-9 items-center gap-5 border-b border-edge bg-surface-strong px-3 text-[13px] backdrop-blur-xl">
       <div className="relative">
         <button
+          ref={toggleRef}
           onClick={() => setMenuOpen((o) => !o)}
           aria-expanded={menuOpen}
           aria-haspopup="dialog"
@@ -33,29 +46,23 @@ export function MenuBar() {
           DS
         </button>
         {menuOpen && (
-          <>
-            <button
-              aria-label="Close menu"
-              className="fixed inset-0 cursor-default"
-              onClick={() => setMenuOpen(false)}
-            />
-            <div
-              role="dialog"
-              aria-label="About This Dev"
-              className="absolute left-0 top-8 w-64 rounded-xl border border-edge bg-surface-strong p-4 shadow-window backdrop-blur-xl"
-            >
-              <p className="font-semibold">About This Dev</p>
-              <p className="mt-1 text-xs text-ink-muted">
-                DakshOS 26.08 &ldquo;Liverpool&rdquo; — one careful owner, ships weekly.
-              </p>
-              <div className="mt-3 flex flex-col gap-1.5 text-xs">
-                <a className="hover:text-accent" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-                <a className="hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-                <a className="hover:text-accent" href={profile.cvPath} download>Download CV</a>
-                <a className="hover:text-accent" href={`mailto:${profile.email}`}>Email me</a>
-              </div>
+          <div
+            ref={popoverRef}
+            role="dialog"
+            aria-label="About This Dev"
+            className="absolute left-0 top-8 w-64 rounded-xl border border-edge bg-surface-strong p-4 shadow-window backdrop-blur-xl"
+          >
+            <p className="font-semibold">About This Dev</p>
+            <p className="mt-1 text-xs text-ink-muted">
+              DakshOS 26.08 &ldquo;Liverpool&rdquo; — one careful owner, ships weekly.
+            </p>
+            <div className="mt-3 flex flex-col gap-1.5 text-xs">
+              <a className="hover:text-accent" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+              <a className="hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+              <a className="hover:text-accent" href={profile.cvPath} download>Download CV</a>
+              <a className="hover:text-accent" href={`mailto:${profile.email}`}>Email me</a>
             </div>
-          </>
+          </div>
         )}
       </div>
       <nav aria-label="Sections" className="hidden gap-4 md:flex">
