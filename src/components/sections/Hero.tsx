@@ -1,13 +1,12 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { profile } from "@/content/profile";
 
 export function Hero() {
-  const reduce = useReducedMotion();
   const fade = (delay: number) => ({
-    initial: { opacity: 0, y: reduce ? 0 : 18 },
+    initial: { opacity: 0, y: 18 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.6, ease: "easeOut" as const, delay },
   });

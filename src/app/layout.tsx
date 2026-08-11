@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import { MotionConfig } from "motion/react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -33,7 +34,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className={`${mono.variable} antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <MotionConfig reducedMotion="user">
+          <ThemeProvider>{children}</ThemeProvider>
+        </MotionConfig>
       </body>
     </html>
   );
