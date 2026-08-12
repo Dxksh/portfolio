@@ -4,6 +4,7 @@ import { MotionConfig } from "motion/react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SoundProvider } from "@/components/SoundProvider";
+import { BootOverlay } from "@/components/BootOverlay";
 
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
       </head>
       <body className={`${mono.variable} antialiased`}>
+        <BootOverlay />
         <MotionConfig reducedMotion="user">
           <ThemeProvider>
             <SoundProvider>{children}</SoundProvider>
