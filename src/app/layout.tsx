@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import { MotionConfig } from "motion/react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SoundProvider } from "@/components/SoundProvider";
 
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
@@ -40,7 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${mono.variable} antialiased`}>
         <MotionConfig reducedMotion="user">
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <SoundProvider>{children}</SoundProvider>
+          </ThemeProvider>
         </MotionConfig>
       </body>
     </html>
