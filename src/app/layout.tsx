@@ -27,11 +27,11 @@ export const metadata: Metadata = {
   },
 };
 
-const themeInit = `try{var t=localStorage.getItem("ds-theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}`;
+const themeInit = `try{var t=localStorage.getItem("ds-theme");document.documentElement.dataset.theme=t==="light"?"light":"dark";var a=localStorage.getItem("ds-accent");document.documentElement.dataset.accent=(a==="ocean"||a==="sunset"||a==="berry")?a:"mint"}catch(e){document.documentElement.dataset.theme="dark";document.documentElement.dataset.accent="mint"}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" data-accent="mint" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <noscript>
