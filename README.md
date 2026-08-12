@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://portfolio-tau-lovat-21.vercel.app"><strong>🔗 View live site</strong></a>
+  <a href="https://www.dsinghvi.com"><strong>🔗 View live site</strong></a>
 </p>
 
 ---
