@@ -7,6 +7,8 @@ export function useMediaQuery(query: string): boolean {
 
   useEffect(() => {
     const mql = window.matchMedia(query);
+    // SSR-safe: reads a browser-only global (matchMedia) once after mount, by design
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMatches(mql.matches);
     const onChange = (e: MediaQueryListEvent) => setMatches(e.matches);
     mql.addEventListener("change", onChange);

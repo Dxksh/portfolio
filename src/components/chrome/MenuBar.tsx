@@ -94,6 +94,8 @@ function Clock() {
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
+    // SSR-safe: reads a browser-only global (Date) once after mount, by design
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(new Date());
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);

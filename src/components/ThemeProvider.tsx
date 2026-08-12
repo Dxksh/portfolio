@@ -14,6 +14,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(DEFAULT_THEME);
 
   useEffect(() => {
+    // SSR-safe: reads a browser-only global (localStorage) once after mount, by design
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(readStoredTheme(window.localStorage));
   }, []);
 
