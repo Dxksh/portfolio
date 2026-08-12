@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Volume2, VolumeX } from "lucide-react";
 import { SECTIONS, SECTION_IDS } from "@/lib/sections";
 import { useActiveSection } from "@/lib/use-active-section";
 import { useTheme } from "@/components/ThemeProvider";
+import { useSound } from "@/components/SoundProvider";
 import { profile } from "@/content/profile";
 
 export function MenuBar() {
   const active = useActiveSection(SECTION_IDS);
   const { theme, toggle } = useTheme();
+  const { soundEnabled, toggleSound } = useSound();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -77,6 +79,13 @@ export function MenuBar() {
         ))}
       </nav>
       <div className="ml-auto flex items-center gap-3">
+        <button
+          onClick={toggleSound}
+          aria-label={soundEnabled ? "Mute sound" : "Unmute sound"}
+          className="rounded p-1 hover:bg-accent-soft"
+        >
+          {soundEnabled ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
+        </button>
         <button
           onClick={toggle}
           aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
