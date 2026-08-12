@@ -16,12 +16,14 @@ export const metadata: Metadata = {
     description:
       "1+ years shipping scalable systems. Available for work in Liverpool, UK.",
     type: "website",
+    images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Daksh Singhvi — Software Engineer",
     description:
       "1+ years shipping scalable systems. Available for work in Liverpool, UK.",
+    images: ["/og.png"],
   },
 };
 
