@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { profile } from "@/content/profile";
+import { WeatherWidget } from "@/components/widgets/WeatherWidget";
 
 export function Hero() {
   const fade = (delay: number) => ({
@@ -32,6 +33,9 @@ export function Hero() {
       <motion.p {...fade(0.5)} className="mt-2 max-w-xl text-balance text-sm text-ink-muted sm:text-base">
         {profile.summary}
       </motion.p>
+      <motion.div {...fade(0.65)} className="mt-10 grid w-full max-w-3xl gap-3">
+        <WeatherWidget />
+      </motion.div>
       <motion.a {...fade(0.8)} href="#about" aria-label="Scroll to About" className="absolute bottom-24">
         <ChevronDown className="size-6 animate-bounce text-ink-muted motion-reduce:animate-none" />
       </motion.a>
