@@ -3,7 +3,7 @@
 A macOS-desktop-themed portfolio, built as a fully static Next.js one-pager.
 Dark "Night Hills" by default, light "Day Hills" behind the menu-bar toggle.
 
-**Live:** https://dxksh-portfolio.vercel.app <!-- update after first deploy -->
+**Live:** https://portfolio-tau-lovat-21.vercel.app
 
 ## The fun parts
 

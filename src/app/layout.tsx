@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dxksh-portfolio.vercel.app"), // PROVISIONAL — set to real URL after first deploy
+  metadataBase: new URL("https://portfolio-tau-lovat-21.vercel.app"),
   title: "Daksh Singhvi — Software Engineer",
   description:
     "Portfolio of Daksh Singhvi — Software Engineer in Liverpool, UK. 1+ years shipping scalable systems. Available for work.",
