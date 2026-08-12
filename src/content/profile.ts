@@ -2,10 +2,10 @@ export const profile = {
   name: "Daksh Singhvi",
   role: "Software Engineer",
   summary:
-    "CS graduate with 1+ years shipping scalable systems at Sentric Music — immediately available for Software Engineering roles.",
+    "CS graduate with 1+ years of professional experience shipping scalable systems across multiple companies — open to interesting Software Engineering opportunities.",
   about:
-    "I'm a Computer Science graduate from the University of Liverpool with 1+ years of professional experience at Sentric Music — from 10-million-record batch jobs on AWS to full-stack features used across the business. Right now I'm looking for my next Software Engineering role.",
-  availability: "Available for work",
+    "I'm a Computer Science graduate from the University of Liverpool with 1+ years of professional experience across multiple companies — from 10-million-record batch jobs on AWS to full-stack features used across the business. I'm currently a Web and Cloud Developer at the Liverpool Air Quality Research Centre, and always open to interesting Software Engineering opportunities.",
+  availability: "Open to opportunities",
   location: "Liverpool, UK",
   email: "dsinghvi07@gmail.com",
   github: "https://github.com/Dxksh",

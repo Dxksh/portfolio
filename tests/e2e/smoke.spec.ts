@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("shows identity immediately", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1, name: "Daksh Singhvi" })).toBeVisible();
-  await expect(page.getByText("Available for work · Liverpool, UK")).toBeVisible();
+  await expect(page.getByText("Open to opportunities · Liverpool, UK")).toBeVisible();
 });
 
 test("dock navigates to sections", async ({ page }) => {

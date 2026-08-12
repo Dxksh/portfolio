@@ -10,6 +10,15 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
+    id: "laqrc",
+    kind: "work",
+    organisation: "Liverpool Air Quality Research Centre",
+    role: "Web and Cloud Developer",
+    location: "Liverpool, UK",
+    period: "Aug 2026 – Present",
+    highlights: ["Just started — details to follow as the role develops."],
+  },
+  {
     id: "sentric",
     kind: "work",
     organisation: "Sentric Music",

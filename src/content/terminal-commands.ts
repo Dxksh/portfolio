@@ -25,7 +25,7 @@ export const COMMANDS: TerminalCommand[] = [
       lines: [
         accent(`${profile.name} — ${profile.role}`),
         out(`${profile.location} · ${profile.availability} · UK Graduate Visa eligible`),
-        out("1+ years shipping scalable systems at Sentric Music."),
+        out("1+ years shipping scalable systems across multiple companies."),
         out("Type 'skills', 'experience' or 'education' for the details."),
       ],
     }),
@@ -108,7 +108,7 @@ export const COMMANDS: TerminalCommand[] = [
         out('OS:      DakshOS 26.08 "Liverpool"'),
         out("Host:    University of Liverpool — BSc CS, First Class Hons"),
         out("Kernel:  caffeine-6.2.0"),
-        out("Uptime:  1+ years in production (Sentric Music)"),
+        out("Uptime:  1+ years in production (multiple employers)"),
         out("Shell:   zsh, obviously"),
         out("Theme:   Night Hills [dark]"),
         out("CPU:     Cricket-trained reflexes @ 5.0GHz"),

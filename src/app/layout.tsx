@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://portfolio-tau-lovat-21.vercel.app"),
   title: "Daksh Singhvi — Software Engineer",
   description:
-    "Portfolio of Daksh Singhvi — Software Engineer in Liverpool, UK. 1+ years shipping scalable systems. Available for work.",
+    "Portfolio of Daksh Singhvi — Software Engineer in Liverpool, UK. 1+ years shipping scalable systems. Open to opportunities.",
   openGraph: {
     title: "Daksh Singhvi — Software Engineer",
     description:
-      "1+ years shipping scalable systems. Available for work in Liverpool, UK.",
+      "1+ years shipping scalable systems. Open to opportunities in Liverpool, UK.",
     type: "website",
     images: ["/og.png"],
   },
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Daksh Singhvi — Software Engineer",
     description:
-      "1+ years shipping scalable systems. Available for work in Liverpool, UK.",
+      "1+ years shipping scalable systems. Open to opportunities in Liverpool, UK.",
     images: ["/og.png"],
   },
 };

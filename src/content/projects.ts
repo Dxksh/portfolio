@@ -11,6 +11,18 @@ export interface Project {
 
 export const featuredProjects: Project[] = [
   {
+    id: "padelo",
+    name: "Padelo",
+    impact: "Published on the Play Store (internal release)",
+    description:
+      "Cross-platform padel scoring and social app — score tracking, social groups, tournaments and detailed statistics, built with Claude Code agentic workflows.",
+    tech: ["Flutter", "Dart", "Firebase", "Claude Code"],
+    links: [
+      { label: "Landing page", href: "https://padelo-web.vercel.app", external: true },
+      { label: "Private repo — request access", href: `mailto:${profile.email}?subject=Padelo%20repo%20access`, external: false },
+    ],
+  },
+  {
     id: "numble",
     name: "Numble",
     impact: "Real-time multiplayer — two players race live to crack each other's 5-digit codes",
@@ -20,17 +32,6 @@ export const featuredProjects: Project[] = [
     links: [
       { label: "Live demo", href: "https://duelle-game.vercel.app/", external: true },
       { label: "GitHub", href: "https://github.com/Dxksh/duelle", external: true },
-    ],
-  },
-  {
-    id: "padelo",
-    name: "Padelo",
-    impact: "Published on the Play Store (internal release)",
-    description:
-      "Cross-platform padel scoring and social app — score tracking, social groups, tournaments and detailed statistics, built with Claude Code agentic workflows.",
-    tech: ["Flutter", "Dart", "Firebase", "Claude Code"],
-    links: [
-      { label: "Private repo — request access", href: `mailto:${profile.email}?subject=Padelo%20repo%20access`, external: false },
     ],
   },
   {
