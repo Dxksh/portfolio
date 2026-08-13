@@ -62,38 +62,41 @@ export function Experience() {
 function ExperienceCard({ entry, color }: { entry: ExperienceEntry; color: string }) {
   const [expanded, setExpanded] = useState(false);
   const { playClick } = useSound();
+  const highlightsId = `${entry.id}-highlights`;
 
   return (
-    <button
-      onClick={() => {
-        playClick();
-        setExpanded((e) => !e);
-      }}
-      aria-expanded={expanded}
-      className="w-full rounded-lg border-l-4 bg-surface p-3 text-left transition-colors hover:bg-accent-soft"
-      style={{ borderLeftColor: color }}
-    >
-      <div className="flex items-center gap-3">
-        <OrgBadge name={entry.organisation} logo={entry.logo} color={color} />
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold">{entry.role}</p>
-          <p className="truncate text-xs" style={{ color }}>
-            {entry.organisation}
-          </p>
+    <div className="rounded-lg border-l-4 bg-surface transition-colors hover:bg-accent-soft" style={{ borderLeftColor: color }}>
+      <button
+        onClick={() => {
+          playClick();
+          setExpanded((e) => !e);
+        }}
+        aria-expanded={expanded}
+        aria-controls={highlightsId}
+        className="w-full p-3 text-left"
+      >
+        <div className="flex items-center gap-3">
+          <OrgBadge name={entry.organisation} logo={entry.logo} color={color} />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold">{entry.role}</p>
+            <p className="truncate text-xs" style={{ color }}>
+              {entry.organisation}
+            </p>
+          </div>
+          <div className="shrink-0 text-right font-mono text-[11px] text-ink-muted">
+            {entry.location && <p>{entry.location}</p>}
+            <p>{entry.period}</p>
+          </div>
         </div>
-        <div className="shrink-0 text-right font-mono text-[11px] text-ink-muted">
-          {entry.location && <p>{entry.location}</p>}
-          <p>{entry.period}</p>
-        </div>
-      </div>
+      </button>
       {expanded && (
-        <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-sm text-ink-muted marker:text-accent">
-          {entry.highlights.map((h) => (
-            <li key={h}>{h}</li>
+        <ul id={highlightsId} className="flex list-disc flex-col gap-1.5 px-3 pb-3 pl-8 text-sm text-ink-muted marker:text-accent">
+          {entry.highlights.map((h, i) => (
+            <li key={`${entry.id}-${i}`}>{h}</li>
           ))}
         </ul>
       )}
-    </button>
+    </div>
   );
 }
 
