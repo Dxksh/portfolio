@@ -112,3 +112,19 @@ section[id] {
 .animate-boot-in {
   animation: boot-in 400ms ease-out;
 }
+
+@keyframes eq-bounce {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.eq-bar {
+  height: 100%;
+  animation: eq-bounce 0.9s ease-in-out infinite;
+  transform-origin: bottom;
+}
