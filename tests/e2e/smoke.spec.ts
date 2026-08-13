@@ -40,3 +40,33 @@ test("CV download link points at the PDF", async ({ page }) => {
   const link = page.getByRole("link", { name: "Download CV" }).first();
   await expect(link).toHaveAttribute("href", "/cv/Daksh-Singhvi-CV.pdf");
 });
+
+test("dock navigates to the Photos section", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("navigation", { name: "Dock" }).getByRole("button", { name: "Photos" }).click();
+  await expect(page.locator("#photos")).toBeInViewport();
+});
+
+test("accent picker persists across reloads", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Switch to Ocean accent" }).click();
+  const html = page.locator("html");
+  await expect(html).toHaveAttribute("data-accent", "ocean");
+  await page.reload();
+  await expect(html).toHaveAttribute("data-accent", "ocean");
+});
+
+test("About modal opens and closes", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "More about me →" }).click();
+  await expect(page.getByRole("dialog", { name: "More About Daksh" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog", { name: "More About Daksh" })).toBeHidden();
+});
+
+test("Experience tabs switch between categories", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => document.getElementById("experience")?.scrollIntoView());
+  await page.getByRole("button", { name: "[--leadership]" }).click();
+  await expect(page.locator("#experience").getByText("Padelo")).toBeVisible();
+});
