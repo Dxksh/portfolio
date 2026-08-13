@@ -5,6 +5,9 @@ export const profile = {
     "CS graduate with 1+ years of professional experience shipping scalable systems across multiple companies — open to interesting Software Engineering opportunities.",
   about:
     "I'm a Computer Science graduate from the University of Liverpool with 1+ years of professional experience across multiple companies — from 10-million-record batch jobs on AWS to full-stack features used across the business. I'm currently a Web and Cloud Developer at the Liverpool Air Quality Research Centre, and always open to interesting Software Engineering opportunities.",
+  headshot: "", // set to e.g. "/headshot.jpg" (place the file in public/) once supplied — renders without a photo until then
+  moreAboutMe:
+    "// PROVISIONAL — replace with your real longer narrative. A paragraph or two about your path into engineering, what draws you to building things, and what you care about outside code.",
   availability: "Open to opportunities",
   location: "Liverpool, UK",
   email: "dsinghvi07@gmail.com",
