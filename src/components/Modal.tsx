@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { MacWindow } from "@/components/mac/MacWindow";
+import { useSound } from "@/components/SoundProvider";
 
 interface ModalProps {
   open: boolean;
@@ -15,6 +16,7 @@ interface ModalProps {
 export function Modal({ open, onClose, title, children }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
+  const { playClick } = useSound();
 
   useEffect(() => {
     if (open) {
@@ -28,11 +30,15 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        playClick();
+        onClose();
+      }
     };
     const onPointerDown = (e: PointerEvent) => {
       const target = e.target as Node;
       if (dialogRef.current?.contains(target)) return;
+      playClick();
       onClose();
     };
     window.addEventListener("keydown", onKey);
@@ -41,7 +47,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
       window.removeEventListener("keydown", onKey);
       document.removeEventListener("pointerdown", onPointerDown);
     };
-  }, [open, onClose]);
+  }, [open, onClose, playClick]);
 
   if (typeof document === "undefined") return null;
 

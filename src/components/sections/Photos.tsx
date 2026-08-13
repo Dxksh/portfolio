@@ -48,7 +48,6 @@ export function Photos() {
       <Modal
         open={openPhoto !== null}
         onClose={() => {
-          playClick();
           setOpenPhoto(null);
         }}
         title={openPhoto?.alt ?? "Photo"}

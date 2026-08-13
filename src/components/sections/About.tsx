@@ -70,7 +70,6 @@ export function About() {
       <Modal
         open={moreOpen}
         onClose={() => {
-          playClick();
           setMoreOpen(false);
         }}
         title="More About Daksh"
