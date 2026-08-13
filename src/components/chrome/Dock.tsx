@@ -14,6 +14,7 @@ import {
   FileText,
   FolderKanban,
   House,
+  Images,
   Mail,
   UserRound,
 } from "lucide-react";
@@ -35,6 +36,7 @@ const NAV_ITEMS: DockItem[] = [
   { id: "about", label: "About", icon: UserRound, tint: "from-sky-400 to-sky-600", action: { kind: "scroll", target: "about" } },
   { id: "experience", label: "Experience", icon: Briefcase, tint: "from-amber-400 to-amber-600", action: { kind: "scroll", target: "experience" } },
   { id: "projects", label: "Projects", icon: FolderKanban, tint: "from-violet-400 to-violet-600", action: { kind: "scroll", target: "projects" } },
+  { id: "photos", label: "Photos", icon: Images, tint: "from-pink-400 to-pink-600", action: { kind: "scroll", target: "photos" } },
   { id: "contact", label: "Contact", icon: Mail, tint: "from-rose-400 to-rose-600", action: { kind: "scroll", target: "contact" } },
 ];
 
@@ -125,7 +127,7 @@ function MobileTabBar({ active }: { active: string }) {
   return (
     <nav
       aria-label="Section tabs"
-      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-edge bg-surface-strong pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-edge bg-surface-strong pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
     >
       {tabs.map((item) => {
         const Icon = item.icon;

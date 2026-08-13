@@ -19,7 +19,7 @@ export function Contact() {
   return (
     <section id="contact" className="pb-40 pt-24 md:pb-32">
       <Reveal>
-        <SectionHeader eyebrow="04 · Contact" title="Get in touch" />
+        <SectionHeader eyebrow="05 · Contact" title="Get in touch" />
       </Reveal>
       <div className="grid items-start gap-6 lg:grid-cols-[1.2fr_1fr]">
         <Reveal>
