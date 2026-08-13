@@ -128,3 +128,10 @@ section[id] {
   animation: eq-bounce 0.9s ease-in-out infinite;
   transform-origin: bottom;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-boot-in,
+  .eq-bar {
+    animation: none;
+  }
+}
