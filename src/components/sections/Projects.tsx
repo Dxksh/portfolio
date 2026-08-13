@@ -9,6 +9,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { profile } from "@/content/profile";
 import { featuredProjects, miniProjects, type Project } from "@/content/projects";
 import { useMediaQuery } from "@/lib/use-media-query";
+import { useSound } from "@/components/SoundProvider";
 
 export function Projects() {
   const [minimized, setMinimized] = useState<string[]>([]);
@@ -16,6 +17,7 @@ export function Projects() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const reduce = useReducedMotion();
   const draggable = isDesktop && !reduce;
+  const { playClick } = useSound();
 
   return (
     <section id="projects" className="py-24">
@@ -40,7 +42,10 @@ export function Projects() {
               return (
                 <button
                   key={id}
-                  onClick={() => setMinimized((prev) => prev.filter((m) => m !== id))}
+                  onClick={() => {
+                    playClick();
+                    setMinimized((prev) => prev.filter((m) => m !== id));
+                  }}
                   className="rounded-full border border-edge bg-surface px-3 py-1 text-xs backdrop-blur transition-colors hover:border-accent"
                 >
                   ↑ {project.name}

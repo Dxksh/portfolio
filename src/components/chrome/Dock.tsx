@@ -22,6 +22,7 @@ import { SECTION_IDS, type SectionId } from "@/lib/sections";
 import { useActiveSection } from "@/lib/use-active-section";
 import { profile } from "@/content/profile";
 import { GithubIcon, LinkedinIcon, type IconComponent } from "@/components/icons";
+import { useSound } from "@/components/SoundProvider";
 
 interface DockItem {
   id: string;
@@ -75,6 +76,7 @@ function DockIcon({ item, mouseX, active }: { item: DockItem; mouseX: MotionValu
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const [bouncing, setBouncing] = useState(false);
+  const { playClick } = useSound();
 
   const distance = useTransform(mouseX, (x) => {
     const bounds = ref.current?.getBoundingClientRect();
@@ -90,6 +92,7 @@ function DockIcon({ item, mouseX, active }: { item: DockItem; mouseX: MotionValu
   const Icon = item.icon;
 
   function activate() {
+    playClick();
     if (item.action.kind === "link") {
       window.open(item.action.href, "_blank", "noopener,noreferrer");
       return;
@@ -124,6 +127,7 @@ function DockIcon({ item, mouseX, active }: { item: DockItem; mouseX: MotionValu
 
 function MobileTabBar({ active }: { active: string }) {
   const tabs = NAV_ITEMS.filter((i) => i.id !== "home");
+  const { playClick } = useSound();
   return (
     <nav
       aria-label="Section tabs"
@@ -136,6 +140,7 @@ function MobileTabBar({ active }: { active: string }) {
           <a
             key={item.id}
             href={`#${item.id}`}
+            onClick={playClick}
             className={`flex flex-col items-center gap-0.5 py-2 text-[11px] ${isActive ? "text-accent" : "text-ink-muted"}`}
           >
             <Icon className="size-5" strokeWidth={1.8} />

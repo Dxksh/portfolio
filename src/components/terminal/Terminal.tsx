@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { MacWindow } from "@/components/mac/MacWindow";
 import { profile } from "@/content/profile";
 import { runCommand, visibleCommands, type TerminalLine } from "@/lib/terminal";
+import { useSound } from "@/components/SoundProvider";
 
 interface HistoryEntry {
   input: string;
@@ -27,12 +28,14 @@ export function Terminal() {
   const [cursor, setCursor] = useState(-1); // -1 = composing a new line
   const bodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { playClick } = useSound();
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight });
   }, [entries]);
 
   function submit(raw: string) {
+    playClick();
     const result = runCommand(raw);
     if (result.action === "clear") {
       setEntries([]);

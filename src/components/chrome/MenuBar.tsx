@@ -11,7 +11,7 @@ import { profile } from "@/content/profile";
 export function MenuBar() {
   const active = useActiveSection(SECTION_IDS);
   const { theme, toggle } = useTheme();
-  const { soundEnabled, toggleSound } = useSound();
+  const { soundEnabled, toggleSound, playClick } = useSound();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -72,6 +72,7 @@ export function MenuBar() {
           <a
             key={s.id}
             href={`#${s.id}`}
+            onClick={playClick}
             className={s.id === active ? "font-semibold text-ink" : "text-ink-muted transition-colors hover:text-ink"}
           >
             {s.label}
@@ -87,7 +88,10 @@ export function MenuBar() {
           {soundEnabled ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
         </button>
         <button
-          onClick={toggle}
+          onClick={() => {
+            playClick();
+            toggle();
+          }}
           aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           className="rounded p-1 hover:bg-accent-soft"
         >

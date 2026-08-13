@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useSound } from "@/components/SoundProvider";
 
 interface MacWindowProps {
   title: string;
@@ -9,6 +12,8 @@ interface MacWindowProps {
 }
 
 export function MacWindow({ title, children, className, contentClassName, onClose }: MacWindowProps) {
+  const { playClick } = useSound();
+
   return (
     <div
       className={`overflow-hidden rounded-xl border border-edge bg-surface shadow-window backdrop-blur-xl ${className ?? ""}`}
@@ -17,7 +22,10 @@ export function MacWindow({ title, children, className, contentClassName, onClos
         <span className="flex items-center gap-1.5">
           {onClose ? (
             <button
-              onClick={onClose}
+              onClick={() => {
+                playClick();
+                onClose();
+              }}
               aria-label={`Minimise ${title}`}
               className="group flex h-3 w-3 items-center justify-center rounded-full bg-[#ff5f57]"
             >
