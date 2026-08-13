@@ -1,11 +1,12 @@
 export interface ExperienceEntry {
   id: string;
-  kind: "work" | "education";
+  kind: "work" | "education" | "leadership";
   organisation: string;
   role: string;
   location?: string;
   period: string;
   highlights: string[];
+  logo?: string; // image path; falls back to a generated initial-letter badge when absent
 }
 
 export const experience: ExperienceEntry[] = [
@@ -42,6 +43,41 @@ export const experience: ExperienceEntry[] = [
     highlights: [
       "Built a cross-platform Flutter receipt-scanning app integrating GPT-4o and Google ML Kit to automate receipt data extraction for the Blue Rewards loyalty programme",
       "Migrated a customer analytics dashboard from Power BI to Microsoft Power Apps, scaling to serve 2M+ users with insights into behaviour, spending and engagement",
+    ],
+  },
+  {
+    id: "padelo-founder",
+    kind: "leadership",
+    organisation: "Padelo",
+    role: "Founder",
+    location: "Liverpool, UK",
+    // PROVISIONAL period — best-known estimate from repo history; adjust if the actual founding date differs
+    period: "Jul 2026 – Present",
+    highlights: [
+      "Founded and lead product direction for a cross-platform padel scoring and social app, aiming to scale it from an internal release into a full public product",
+      "Own the end-to-end roadmap — score tracking, social groups, tournaments and statistics — using Claude Code agentic workflows for iterative delivery",
+    ],
+  },
+  {
+    id: "cricket-coach",
+    kind: "leadership",
+    organisation: "Sefton Park Cricket Club",
+    role: "Cricket Coach & 1st XI Athlete",
+    location: "Liverpool, UK",
+    period: "June 2025 – Present",
+    highlights: [
+      "Coach a weekly squad of ~6 junior cricketers aged 11–15, planning and running technical training and match simulation sessions to develop batting, bowling and fielding skills",
+      "Selected for the club's 1st XI in the Liverpool & District Cricket Competition 1st Division, balancing weekend fixtures with full-time studies and software engineering work",
+    ],
+  },
+  {
+    id: "head-boy",
+    kind: "leadership",
+    organisation: "Ambassador School",
+    role: "Head Boy & Sports Captain",
+    period: "Apr 2020 – Mar 2022",
+    highlights: [
+      "Led a team of over 30 senior and junior student council members, hosting welfare, educational and sports events and providing a platform for students to voice their ideas",
     ],
   },
   {
