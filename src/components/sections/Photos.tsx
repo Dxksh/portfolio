@@ -38,7 +38,7 @@ export function Photos() {
                 <img
                   src={photo.src}
                   alt={photo.alt}
-                  className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="size-full object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:group-hover:scale-100"
                 />
               </button>
             ))}
