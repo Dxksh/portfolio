@@ -42,6 +42,11 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         if (!focusable || focusable.length === 0) return;
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
+        if (!dialogRef.current?.contains(document.activeElement) || document.activeElement === dialogRef.current) {
+          e.preventDefault();
+          (e.shiftKey ? last : first).focus();
+          return;
+        }
         if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
           last.focus();
