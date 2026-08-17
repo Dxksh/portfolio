@@ -56,10 +56,20 @@ test("accent picker persists across reloads", async ({ page }) => {
   await expect(html).toHaveAttribute("data-accent", "ocean");
 });
 
-test("More about me button is hidden while profile.moreAboutMe is empty", async ({ page }) => {
+test("About modal opens, traps focus, and closes", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "More about me →" })).toHaveCount(0);
-  await expect(page.getByRole("dialog", { name: "More About Daksh" })).toHaveCount(0);
+  await page.getByRole("button", { name: "More about me →" }).click();
+  const dialog = page.getByRole("dialog", { name: "More About Daksh" });
+  await expect(dialog).toBeVisible();
+
+  // Focus trap: from the initial just-opened state, both Tab and Shift+Tab must stay inside the dialog.
+  await page.keyboard.press("Shift+Tab");
+  await expect(dialog.locator(":focus")).toHaveCount(1);
+  await page.keyboard.press("Tab");
+  await expect(dialog.locator(":focus")).toHaveCount(1);
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
 });
 
 test("Experience tabs switch between categories", async ({ page }) => {
