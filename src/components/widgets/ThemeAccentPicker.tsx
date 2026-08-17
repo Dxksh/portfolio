@@ -30,7 +30,7 @@ export function ThemeAccentPicker() {
             }}
             disabled={disabled}
             aria-label={`Switch to ${a.label} accent`}
-            aria-pressed={accent === a.id}
+            aria-pressed={!disabled && accent === a.id}
             className="relative flex size-8 items-center justify-center rounded-full border border-edge disabled:cursor-not-allowed disabled:opacity-40"
             style={{ backgroundColor: a.swatch }}
           >

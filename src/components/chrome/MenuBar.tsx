@@ -7,6 +7,7 @@ import { useActiveSection } from "@/lib/use-active-section";
 import { useTheme } from "@/components/ThemeProvider";
 import { useSound } from "@/components/SoundProvider";
 import { profile } from "@/content/profile";
+import { playBlip } from "@/lib/sound";
 
 export function MenuBar() {
   const active = useActiveSection(SECTION_IDS);
@@ -81,7 +82,10 @@ export function MenuBar() {
       </nav>
       <div className="ml-auto flex items-center gap-3">
         <button
-          onClick={toggleSound}
+          onClick={() => {
+            if (!soundEnabled) playBlip();
+            toggleSound();
+          }}
           aria-label={soundEnabled ? "Mute sound" : "Unmute sound"}
           className="rounded p-1 hover:bg-accent-soft"
         >

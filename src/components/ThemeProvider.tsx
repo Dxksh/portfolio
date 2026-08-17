@@ -21,7 +21,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     // SSR-safe: reads browser-only globals (localStorage) once after mount, by design
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(readStoredTheme(window.localStorage));
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAccentState(readStoredAccent(window.localStorage));
   }, []);
 

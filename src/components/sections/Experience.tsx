@@ -35,6 +35,7 @@ export function Experience() {
                   playClick();
                   setActiveTab(tab.kind);
                 }}
+                aria-pressed={activeTab === tab.kind}
                 className={`pb-2 ${
                   activeTab === tab.kind
                     ? "border-b-2 border-accent font-semibold text-ink"
@@ -79,9 +80,7 @@ function ExperienceCard({ entry, color }: { entry: ExperienceEntry; color: strin
           <OrgBadge name={entry.organisation} logo={entry.logo} color={color} />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold">{entry.role}</p>
-            <p className="truncate text-xs" style={{ color }}>
-              {entry.organisation}
-            </p>
+            <p className="truncate text-xs text-ink-muted">{entry.organisation}</p>
           </div>
           <div className="shrink-0 text-right font-mono text-[11px] text-ink-muted">
             {entry.location && <p>{entry.location}</p>}
@@ -89,13 +88,15 @@ function ExperienceCard({ entry, color }: { entry: ExperienceEntry; color: strin
           </div>
         </div>
       </button>
-      {expanded && (
-        <ul id={highlightsId} className="flex list-disc flex-col gap-1.5 px-3 pb-3 pl-8 text-sm text-ink-muted marker:text-accent">
-          {entry.highlights.map((h, i) => (
-            <li key={`${entry.id}-${i}`}>{h}</li>
-          ))}
-        </ul>
-      )}
+      <ul
+        id={highlightsId}
+        hidden={!expanded}
+        className="flex list-disc flex-col gap-1.5 px-3 pb-3 pl-8 text-sm text-ink-muted marker:text-accent"
+      >
+        {entry.highlights.map((h, i) => (
+          <li key={`${entry.id}-${i}`}>{h}</li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -107,7 +108,7 @@ function OrgBadge({ name, logo, color }: { name: string; logo?: string; color: s
   }
   return (
     <span
-      className="flex size-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white"
+      className="flex size-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-black"
       style={{ backgroundColor: color }}
       aria-hidden="true"
     >

@@ -56,12 +56,10 @@ test("accent picker persists across reloads", async ({ page }) => {
   await expect(html).toHaveAttribute("data-accent", "ocean");
 });
 
-test("About modal opens and closes", async ({ page }) => {
+test("More about me button is hidden while profile.moreAboutMe is empty", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "More about me →" }).click();
-  await expect(page.getByRole("dialog", { name: "More About Daksh" })).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog", { name: "More About Daksh" })).toBeHidden();
+  await expect(page.getByRole("button", { name: "More about me →" })).toHaveCount(0);
+  await expect(page.getByRole("dialog", { name: "More About Daksh" })).toHaveCount(0);
 });
 
 test("Experience tabs switch between categories", async ({ page }) => {

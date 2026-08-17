@@ -25,7 +25,7 @@ export function BootOverlay() {
       aria-label="Skip intro"
       onClick={() => setPhase("gone")}
       className={`fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-[var(--wall-sky-2)] transition-opacity duration-300 ease-out motion-reduce:hidden ${
-        phase === "fading" ? "opacity-0" : "opacity-100"
+        phase === "fading" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
       <span className="animate-boot-in rounded-2xl bg-accent px-6 py-4 text-2xl font-bold tracking-tight text-white motion-reduce:animate-none">

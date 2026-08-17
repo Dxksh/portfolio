@@ -30,15 +30,17 @@ export function About() {
           )}
           <div>
             <p className="text-sm text-ink-muted">{profile.about}</p>
-            <button
-              onClick={() => {
-                playClick();
-                setMoreOpen(true);
-              }}
-              className="mt-2 text-sm font-medium text-accent hover:underline"
-            >
-              More about me →
-            </button>
+            {profile.moreAboutMe && (
+              <button
+                onClick={() => {
+                  playClick();
+                  setMoreOpen(true);
+                }}
+                className="mt-2 text-sm font-medium text-accent hover:underline"
+              >
+                More about me →
+              </button>
+            )}
           </div>
         </div>
       </Reveal>
