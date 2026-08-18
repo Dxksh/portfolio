@@ -19,26 +19,26 @@ export function About() {
         <SectionHeader eyebrow="01 · About" title="Hello, world." />
       </Reveal>
       <Reveal>
-        <div className="mb-6 flex flex-col items-center gap-6 rounded-xl border border-edge bg-surface p-6 backdrop-blur sm:flex-row sm:items-center sm:p-8">
+        <div className="mb-6 flex flex-col items-center gap-5 rounded-xl border border-edge bg-surface p-5 backdrop-blur sm:flex-row sm:items-center sm:p-6">
           {profile.headshot && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={profile.headshot}
               alt={profile.name}
-              width={176}
-              height={176}
-              className="size-36 shrink-0 rounded-full border border-edge object-cover sm:size-44"
+              width={160}
+              height={160}
+              className="size-32 shrink-0 rounded-full border border-edge object-cover sm:size-40"
             />
           )}
           <div className="text-center sm:text-left">
-            <p className="text-base leading-relaxed text-ink-muted sm:text-lg">{profile.about}</p>
+            <p className="text-sm leading-relaxed text-ink-muted sm:text-base">{profile.about}</p>
             {profile.moreAboutMe && (
               <button
                 onClick={() => {
                   playClick();
                   setMoreOpen(true);
                 }}
-                className="mt-3 text-base font-medium text-accent hover:underline"
+                className="mt-3 text-sm font-medium text-accent hover:underline"
               >
                 More about me →
               </button>

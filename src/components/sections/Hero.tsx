@@ -28,7 +28,7 @@ export function Hero() {
         <WeatherWidget />
         <NowPlayingWidget />
       </motion.div>
-      <motion.a {...fade(0.8)} href="#about" aria-label="Scroll to About" className="absolute bottom-24">
+      <motion.a {...fade(0.8)} href="#about" aria-label="Scroll to About" className="absolute bottom-28 md:bottom-32">
         <ChevronDown className="size-6 animate-bounce text-ink-muted motion-reduce:animate-none" />
       </motion.a>
     </section>
