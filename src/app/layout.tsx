@@ -4,7 +4,7 @@ import { MotionConfig } from "motion/react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SoundProvider } from "@/components/SoundProvider";
-import { BootOverlay } from "@/components/BootOverlay";
+import { ResumeProvider } from "@/components/ResumeProvider";
 
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
   },
 };
 
-const themeInit = `try{var t=localStorage.getItem("ds-theme");document.documentElement.dataset.theme=t==="light"?"light":"dark";var a=localStorage.getItem("ds-accent");document.documentElement.dataset.accent=(a==="ocean"||a==="sunset"||a==="berry")?a:"mint"}catch(e){document.documentElement.dataset.theme="dark";document.documentElement.dataset.accent="mint"}`;
+const themeInit = `try{var t=localStorage.getItem("ds-theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" data-accent="mint" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <noscript>
@@ -41,10 +41,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
       </head>
       <body className={`${mono.variable} antialiased`}>
-        <BootOverlay />
         <MotionConfig reducedMotion="user">
           <ThemeProvider>
-            <SoundProvider>{children}</SoundProvider>
+            <SoundProvider>
+              <ResumeProvider>{children}</ResumeProvider>
+            </SoundProvider>
           </ThemeProvider>
         </MotionConfig>
       </body>

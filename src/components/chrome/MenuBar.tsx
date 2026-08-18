@@ -6,6 +6,7 @@ import { SECTIONS, SECTION_IDS } from "@/lib/sections";
 import { useActiveSection } from "@/lib/use-active-section";
 import { useTheme } from "@/components/ThemeProvider";
 import { useSound } from "@/components/SoundProvider";
+import { useResume } from "@/components/ResumeProvider";
 import { profile } from "@/content/profile";
 import { playBlip } from "@/lib/sound";
 
@@ -13,6 +14,7 @@ export function MenuBar() {
   const active = useActiveSection(SECTION_IDS);
   const { theme, toggle } = useTheme();
   const { soundEnabled, toggleSound, playClick } = useSound();
+  const { openResume } = useResume();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -62,7 +64,22 @@ export function MenuBar() {
             <div className="mt-3 flex flex-col gap-1.5 text-xs">
               <a className="hover:text-accent" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               <a className="hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-              <a className="hover:text-accent" href={profile.cvPath} download>Download CV</a>
+              <button
+                type="button"
+                onClick={() => {
+                  playClick();
+                  // Close the popover first so only the modal is listening for Escape, and hand
+                  // focus back to the trigger before the modal captures it — the popover (and
+                  // this button) unmount on the same click, so the modal needs something that
+                  // still exists to restore focus to on close.
+                  setMenuOpen(false);
+                  toggleRef.current?.focus();
+                  openResume();
+                }}
+                className="text-left hover:text-accent"
+              >
+                View resume
+              </button>
               <a className="hover:text-accent" href={`mailto:${profile.email}`}>Email me</a>
             </div>
           </div>

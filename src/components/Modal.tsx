@@ -11,9 +11,17 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: ReactNode;
+  /**
+   * Replaces the default width/height/scroll classes on the window wrapper — for windows that
+   * need to be wider than the default, or that scroll their own content. Omit to keep the
+   * default narrow, self-scrolling window.
+   */
+  windowClassName?: string;
+  /** Passed through to MacWindow, e.g. "p-0" for content that sits flush inside the chrome. */
+  contentClassName?: string;
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
+export function Modal({ open, onClose, title, children, windowClassName, contentClassName }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const { playClick } = useSound();
@@ -92,9 +100,9 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 12 }}
             transition={{ duration: 0.2 }}
-            className="max-h-[85svh] w-full max-w-lg overflow-y-auto sm:max-h-[70vh]"
+            className={windowClassName ?? "max-h-[85svh] w-full max-w-lg overflow-y-auto sm:max-h-[70vh]"}
           >
-            <MacWindow title={title} onClose={onClose}>
+            <MacWindow title={title} onClose={onClose} contentClassName={contentClassName}>
               {children}
             </MacWindow>
           </motion.div>

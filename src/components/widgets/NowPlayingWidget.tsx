@@ -33,8 +33,8 @@ export function NowPlayingWidget() {
         </div>
       </div>
       <div className="mt-3">
-        <p className="truncate text-sm font-semibold">{track.title}</p>
-        <p className="truncate text-xs text-ink-muted">{track.artist}</p>
+        <p className="truncate text-base font-semibold">{track.title}</p>
+        <p className="truncate text-sm text-ink-muted">{track.artist}</p>
       </div>
       <a
         href={track.spotifyUrl}

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "find public -name .DS_Store -delete",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

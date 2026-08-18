@@ -92,6 +92,9 @@ src/
     sections.ts, use-active-section.ts, use-media-query.ts
 tests/e2e/
   smoke.spec.ts             Playwright suite over the static export
+public/
+  logos/                    company logos — drop `acme.png` here, then set
+                            `logo: "/logos/acme.png"` on that experience entry
 ```
 
 ---

@@ -23,13 +23,19 @@ import { useActiveSection } from "@/lib/use-active-section";
 import { profile } from "@/content/profile";
 import { GithubIcon, LinkedinIcon, type IconComponent } from "@/components/icons";
 import { useSound } from "@/components/SoundProvider";
+import { useResume } from "@/components/ResumeProvider";
+
+type DockAction =
+  | { kind: "scroll"; target: SectionId }
+  | { kind: "link"; href: string }
+  | { kind: "action"; id: "resume" };
 
 interface DockItem {
   id: string;
   label: string;
   icon: IconComponent;
   tint: string;
-  action: { kind: "scroll"; target: SectionId } | { kind: "link"; href: string };
+  action: DockAction;
 }
 
 const NAV_ITEMS: DockItem[] = [
@@ -44,7 +50,7 @@ const NAV_ITEMS: DockItem[] = [
 const LINK_ITEMS: DockItem[] = [
   { id: "github", label: "GitHub", icon: GithubIcon, tint: "from-zinc-500 to-zinc-700", action: { kind: "link", href: profile.github } },
   { id: "linkedin", label: "LinkedIn", icon: LinkedinIcon, tint: "from-blue-400 to-blue-600", action: { kind: "link", href: profile.linkedin } },
-  { id: "cv", label: "Download CV", icon: FileText, tint: "from-teal-400 to-teal-600", action: { kind: "link", href: profile.cvPath } },
+  { id: "cv", label: "Resume", icon: FileText, tint: "from-teal-400 to-teal-600", action: { kind: "action", id: "resume" } },
 ];
 
 export function Dock() {
@@ -57,12 +63,12 @@ export function Dock() {
         aria-label="Dock"
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="fixed bottom-3 left-1/2 z-50 hidden -translate-x-1/2 items-end gap-2 rounded-2xl border border-edge bg-surface-strong px-3 pb-2 pt-2 shadow-window backdrop-blur-xl md:flex"
+        className="fixed bottom-3 left-1/2 z-50 hidden -translate-x-1/2 items-end gap-1.5 rounded-2xl border border-edge bg-surface-strong px-3 pb-2 pt-2 shadow-window backdrop-blur-xl md:flex"
       >
         {NAV_ITEMS.map((item) => (
           <DockIcon key={item.id} item={item} mouseX={mouseX} active={item.id === active} />
         ))}
-        <span className="mx-1 h-10 w-px self-center bg-edge" aria-hidden="true" />
+        <span className="mx-1 h-14 w-px self-center bg-edge" aria-hidden="true" />
         {LINK_ITEMS.map((item) => (
           <DockIcon key={item.id} item={item} mouseX={mouseX} active={false} />
         ))}
@@ -77,13 +83,14 @@ function DockIcon({ item, mouseX, active }: { item: DockItem; mouseX: MotionValu
   const reduce = useReducedMotion();
   const [bouncing, setBouncing] = useState(false);
   const { playClick } = useSound();
+  const { openResume } = useResume();
 
   const distance = useTransform(mouseX, (x) => {
     const bounds = ref.current?.getBoundingClientRect();
     if (!bounds) return Infinity;
     return x - bounds.x - bounds.width / 2;
   });
-  const size = useSpring(useTransform(distance, [-130, 0, 130], [44, 72, 44]), {
+  const size = useSpring(useTransform(distance, [-150, 0, 150], [64, 104, 64]), {
     mass: 0.1,
     stiffness: 190,
     damping: 13,
@@ -93,12 +100,23 @@ function DockIcon({ item, mouseX, active }: { item: DockItem; mouseX: MotionValu
 
   function activate() {
     playClick();
-    if (item.action.kind === "link") {
-      window.open(item.action.href, "_blank", "noopener,noreferrer");
-      return;
+    const { action } = item;
+    switch (action.kind) {
+      case "link":
+        window.open(action.href, "_blank", "noopener,noreferrer");
+        return;
+      case "action":
+        openResume();
+        return;
+      case "scroll":
+        if (!reduce) setBouncing(true);
+        document.getElementById(action.target)?.scrollIntoView();
+        return;
+      default: {
+        const unhandled: never = action;
+        throw new Error(`Unhandled dock action: ${JSON.stringify(unhandled)}`);
+      }
     }
-    if (!reduce) setBouncing(true);
-    document.getElementById(item.action.target)?.scrollIntoView();
   }
 
   return (
@@ -109,7 +127,7 @@ function DockIcon({ item, mouseX, active }: { item: DockItem; mouseX: MotionValu
       <motion.button
         aria-label={item.label}
         onClick={activate}
-        style={reduce ? { width: 44, height: 44 } : { width: size, height: size }}
+        style={reduce ? { width: 64, height: 64 } : { width: size, height: size }}
         animate={bouncing ? { y: [0, -26, 0, -9, 0] } : { y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         onAnimationComplete={() => setBouncing(false)}

@@ -1,20 +1,33 @@
 "use client";
 
-import { ArrowUpRight, FileText } from "lucide-react";
+import { ArrowUpRight, Eye, Maximize2 } from "lucide-react";
 import { MacWindow } from "@/components/mac/MacWindow";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
+import { useResume } from "@/components/ResumeProvider";
+import { useSound } from "@/components/SoundProvider";
 import { profile } from "@/content/profile";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { GithubIcon, LinkedinIcon, type IconComponent } from "@/components/icons";
 
-const TILES = [
-  { label: "GitHub", href: profile.github, icon: GithubIcon, external: true },
-  { label: "LinkedIn", href: profile.linkedin, icon: LinkedinIcon, external: true },
-  { label: "Download CV", href: profile.cvPath, icon: FileText, external: false },
+// No separate download tile — the résumé window carries its own Download button.
+type Tile = { label: string; icon: IconComponent } & (
+  | { kind: "external"; href: string }
+  | { kind: "resume" }
+);
+
+const TILES: Tile[] = [
+  { label: "GitHub", kind: "external", href: profile.github, icon: GithubIcon },
+  { label: "LinkedIn", kind: "external", href: profile.linkedin, icon: LinkedinIcon },
+  { label: "View resume", kind: "resume", icon: Eye },
 ];
+
+const TILE_CLASS =
+  "group flex items-center justify-between rounded-xl border border-edge bg-surface p-4 backdrop-blur transition-colors hover:border-accent";
 
 export function Contact() {
   const mailHref = `mailto:${profile.email}?subject=${encodeURIComponent("Let's work together")}`;
+  const { openResume } = useResume();
+  const { playClick } = useSound();
 
   return (
     <section id="contact" className="pb-40 pt-24 md:pb-32">
@@ -51,18 +64,41 @@ export function Contact() {
           <div className="flex flex-col gap-3">
             {TILES.map((tile) => {
               const Icon = tile.icon;
+              const label = (
+                <span className="flex items-center gap-3 text-sm font-medium">
+                  <Icon className="size-4 text-accent" /> {tile.label}
+                </span>
+              );
+
+              if (tile.kind === "resume") {
+                return (
+                  <button
+                    key={tile.label}
+                    type="button"
+                    onClick={() => {
+                      playClick();
+                      openResume();
+                    }}
+                    className={`${TILE_CLASS} w-full text-left`}
+                  >
+                    {label}
+                    <Maximize2
+                      className="size-4 text-ink-muted transition-transform group-hover:scale-110"
+                      aria-hidden="true"
+                    />
+                  </button>
+                );
+              }
+
               return (
                 <a
                   key={tile.label}
                   href={tile.href}
-                  {...(tile.external
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : { download: true })}
-                  className="group flex items-center justify-between rounded-xl border border-edge bg-surface p-4 backdrop-blur transition-colors hover:border-accent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={TILE_CLASS}
                 >
-                  <span className="flex items-center gap-3 text-sm font-medium">
-                    <Icon className="size-4 text-accent" /> {tile.label}
-                  </span>
+                  {label}
                   <ArrowUpRight className="size-4 text-ink-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </a>
               );

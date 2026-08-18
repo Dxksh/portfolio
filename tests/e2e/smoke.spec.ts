@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("shows identity immediately", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1, name: "Daksh Singhvi" })).toBeVisible();
-  await expect(page.getByText("Open to opportunities · Liverpool, UK")).toBeVisible();
+  await expect(page.getByText("Software Engineer", { exact: true })).toBeVisible();
 });
 
 test("dock navigates to sections", async ({ page }) => {
@@ -35,10 +35,15 @@ test("mobile shows the tab bar instead of the dock", async ({ page }) => {
   await expect(page.getByRole("navigation", { name: "Dock" })).toBeHidden();
 });
 
-test("CV download link points at the PDF", async ({ page }) => {
+test("resume window opens from the dock and offers the PDF", async ({ page }) => {
   await page.goto("/");
-  const link = page.getByRole("link", { name: "Download CV" }).first();
-  await expect(link).toHaveAttribute("href", "/cv/Daksh-Singhvi-CV.pdf");
+  await page.getByRole("navigation", { name: "Dock" }).getByRole("button", { name: "Resume" }).click();
+  const dialog = page.getByRole("dialog", { name: "Resume" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "Download CV (PDF)" })).toHaveAttribute(
+    "href",
+    "/cv/Daksh-Singhvi-CV.pdf"
+  );
 });
 
 test("dock navigates to the Photos section", async ({ page }) => {
@@ -47,13 +52,16 @@ test("dock navigates to the Photos section", async ({ page }) => {
   await expect(page.locator("#photos")).toBeInViewport();
 });
 
-test("accent picker persists across reloads", async ({ page }) => {
+test("photo lightbox opens and steps between photos", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Switch to Ocean accent" }).click();
-  const html = page.locator("html");
-  await expect(html).toHaveAttribute("data-accent", "ocean");
-  await page.reload();
-  await expect(html).toHaveAttribute("data-accent", "ocean");
+  await page.locator("#photos").getByRole("button").first().click();
+  const dialog = page.getByRole("dialog", { name: "Photos" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText(/^1 of \d+$/)).toBeVisible();
+  await dialog.getByRole("button", { name: "Next photo" }).click();
+  await expect(dialog.getByText(/^2 of \d+$/)).toBeVisible();
+  await page.keyboard.press("ArrowLeft");
+  await expect(dialog.getByText(/^1 of \d+$/)).toBeVisible();
 });
 
 test("About modal opens, traps focus, and closes", async ({ page }) => {
@@ -77,4 +85,32 @@ test("Experience tabs switch between categories", async ({ page }) => {
   await page.evaluate(() => document.getElementById("experience")?.scrollIntoView());
   await page.getByRole("button", { name: "[--leadership]" }).click();
   await expect(page.locator("#experience").getByText("Padelo")).toBeVisible();
+});
+
+test("photos stay visible after a reload", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#photos").scrollIntoViewIfNeeded();
+  const firstThumb = page.locator("#photos img").first();
+  await expect(firstThumb).toHaveCSS("opacity", "1");
+  // Reload with the images now warm in cache — they can finish loading before React
+  // attaches its onLoad handler, so a load-event-only fade never fires.
+  await page.reload();
+  await page.locator("#photos").scrollIntoViewIfNeeded();
+  await expect(firstThumb).toHaveCSS("opacity", "1");
+});
+
+test("lightbox does not flash or resize when stepping photos", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#photos").getByRole("button").first().click();
+  const dialog = page.getByRole("dialog", { name: "Photos" });
+  const stage = dialog.locator("img").first();
+  await expect(stage).toHaveCSS("opacity", "1");
+  const before = await dialog.boundingBox();
+
+  await dialog.getByRole("button", { name: "Next photo" }).click();
+  await expect(dialog.getByText(/^2 of \d+$/)).toBeVisible();
+  // The image must never go transparent mid-step, and the window must not resize.
+  await expect(stage).toHaveCSS("opacity", "1");
+  const after = await dialog.boundingBox();
+  expect(after?.height ?? 0).toBeCloseTo(before?.height ?? 0, 0);
 });

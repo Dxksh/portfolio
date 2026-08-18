@@ -74,24 +74,31 @@ function ExperienceCard({ entry, color }: { entry: ExperienceEntry; color: strin
         }}
         aria-expanded={expanded}
         aria-controls={highlightsId}
-        className="w-full p-3 text-left"
+        className="w-full p-4 text-left sm:p-5"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <OrgBadge name={entry.organisation} logo={entry.logo} color={color} />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold">{entry.role}</p>
-            <p className="truncate text-xs text-ink-muted">{entry.organisation}</p>
+            <p className="truncate text-base font-semibold">{entry.role}</p>
+            <p className="truncate text-sm text-ink-muted">{entry.organisation}</p>
           </div>
-          <div className="shrink-0 text-right font-mono text-[11px] text-ink-muted">
+          {/* 11px on phones only: at 375px the wider mono column would squeeze the
+              truncated role/org text down to a couple of characters. */}
+          <div className="shrink-0 text-right font-mono text-[11px] text-ink-muted sm:text-xs">
             {entry.location && <p>{entry.location}</p>}
             <p>{entry.period}</p>
           </div>
         </div>
       </button>
+      {/*
+        pl aligns the bullets with the text column above them:
+        card padding + badge + header gap = 16 + 48 + 16 = 80px (pl-20),
+        and 20 + 48 + 16 = 84px once the padding steps up at sm (pl-21).
+      */}
       <ul
         id={highlightsId}
         hidden={!expanded}
-        className="flex list-disc flex-col gap-1.5 px-3 pb-3 pl-8 text-sm text-ink-muted marker:text-accent"
+        className="flex list-disc flex-col gap-2 px-4 pb-4 pl-20 text-sm text-ink-muted marker:text-accent sm:px-5 sm:pb-5 sm:pl-21"
       >
         {entry.highlights.map((h, i) => (
           <li key={`${entry.id}-${i}`}>{h}</li>
@@ -103,12 +110,24 @@ function ExperienceCard({ entry, color }: { entry: ExperienceEntry; color: strin
 
 function OrgBadge({ name, logo, color }: { name: string; logo?: string; color: string }) {
   if (logo) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={logo} alt="" className="size-9 shrink-0 rounded-lg object-cover" />;
+    // Real company logos are rarely square and usually dark-on-transparent, so contain
+    // them (never crop) on a light plate that keeps them legible in both themes.
+    // Plain <img> is deliberate: this app is a static export, so next/image would only
+    // run unoptimized anyway — matches About.tsx / Photos.tsx.
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={logo}
+        alt=""
+        width={48}
+        height={48}
+        className="size-12 shrink-0 rounded-lg border border-edge bg-white/90 object-contain p-1"
+      />
+    );
   }
   return (
     <span
-      className="flex size-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-black"
+      className="flex size-12 shrink-0 items-center justify-center rounded-lg text-lg font-bold text-black"
       style={{ backgroundColor: color }}
       aria-hidden="true"
     >
