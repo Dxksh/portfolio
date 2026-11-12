@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import { MotionConfig } from "motion/react";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SoundProvider } from "@/components/SoundProvider";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </SoundProvider>
           </ThemeProvider>
         </MotionConfig>
+        <Analytics />
       </body>
     </html>
   );
